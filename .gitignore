@@ -79,3 +79,6 @@ dist
 
 # IDE
 .idea
+
+# Ignore server enviroment
+config/environment.js

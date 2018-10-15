@@ -1,7 +1,7 @@
 {
   "name": "social-sentiment-web",
   "version": "0.0.0",
-  "description": "Sentiment analysis from social media, Web frontend",
+  "description": "npm ",
   "author": "irini",
   "private": true,
   "scripts": {
@@ -11,15 +11,18 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@funjs/route-parser": "^1.4.0",
     "@nuxtjs/axios": "^5.0.0",
     "cross-env": "^5.2.0",
     "element-ui": "^2.4.6",
     "express": "^4.16.3",
+    "node-sass": "^4.9.3",
     "nuxt": "^2.0.0",
-    "pug": "^2.0.3",
-    "scss": "^0.2.4"
+    "pug": "^2.0.3"
   },
   "devDependencies": {
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "pug-plain-loader": "^1.0.0",
+    "sass-loader": "^7.1.0"
   }
 }
