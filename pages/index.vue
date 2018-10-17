@@ -1,66 +1,40 @@
-<template>
-  <section class="container">
-    <div>
-      <logo/>
-      <h1 class="title">
-        social-sentiment-web
-      </h1>
-      <h2 class="subtitle">
-        Sentiment analysis from social media, Web frontend
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green">Documentation</a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey">GitHub</a>
-      </div>
-    </div>
-  </section>
+<template lang="pug">
+  .topicsWrap
+    Topics
+
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+  import Topics from '~/components/topics/Topics'
 
-export default {
-  components: {
-    Logo
+  export default {
+    head: {
+      title: 'Topics',
+      link: [{
+        hid: "canonical",
+        rel: "canonical",
+        href: "/start"
+      }],
+      meta: [
+        { hid: 'description', name: 'description', content: 'Sentiment analysis from social media' },
+        { hid: 'og:description', name: 'og:description', content: 'Sentiment analysis from social media' },
+        { hid: 'og:title', name: 'og:title', content: 'Topics Management' },
+      ]
+    },
+    data() {
+      return {
+
+      }
+    },
+    components: {
+      Topics
+    },
+    beforeCreate() {
+      this.$store.commit('setPageHead', 'Topics');
+    }
   }
-}
 </script>
 
-<style>
+<style scoped lang="scss">
 
-.container {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
 </style>
