@@ -32,6 +32,9 @@ export default {
       if (topic.query !== undefined) {
         oldTopic.query = topic.query;
       }
+    },
+    deleteTopic(state,uid){
+      Vue.delete(state.topics,uid);
     }
   },
   actions: {
@@ -52,5 +55,9 @@ export default {
       rester.apiPatch(ctx, '/topic', topic,
         'editTopic', null, ONLY_RESPONSE)
     },
+    deleteTopic(ctx, uid) {
+      rester.apiDelete(ctx, '/topic',
+        'deleteTopic', uid)
+}
   }
 }
