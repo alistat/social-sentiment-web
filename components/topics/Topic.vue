@@ -12,19 +12,18 @@
     #contentEdit(v-show="isEditing")
         fieldset
           label Name
-          input(v-model='topic.name',@input="onEditName")
+          input(v-model:name="topic.name")
         fieldset
           label Query
-          input(v-model='topic.query',@input="onEditQuery")
+          input(v-model:query="topic.query" )
         .buttonWrap
-          button(@click="hideForm") Close
+          button(@click="onCancel") Close
+          button(@click="onEditTopic") Save
 </template>
 
 
 <script>
-import {
-  mapState, mapActions
-} from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: "Topic",
@@ -43,23 +42,26 @@ export default {
       this.deleteTopic(this.topic._id)
 
     },
-    onEditName() {
+    onEditTopic() {
       this.editTopic({
-        _id: this.topic.id,
-        name: name
+        _id: this.topic._id
       })
-    },
-    onEditQuery() {
-      this.editTopic({
-        _id: this.topic.id,
-        query: query
-      })
-    },
+
+      this.hideForm();
+    }
+    ,
     showForm() {
+      this.beforeTopic = Object.assign({},(this.topic));
       this.isEditing = true;
     },
     hideForm() {
       this.isEditing = false;
+    },
+
+    onCancel(){
+      Object.assign(this.topic,this.beforeTopic);
+      this.hideForm();
+
     }
   }
 

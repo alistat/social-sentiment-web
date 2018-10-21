@@ -24,19 +24,21 @@ export default {
     addTopic(state, topic) {
       Vue.set(state.topics, topic._id, topic);
     },
-    editTopic(state, topic) {
-      const oldTopic = state.topics[topic._id];
-      if (topic.name !== undefined) {
-        oldTopic.name = topic.name;
+    editTopic(state,newTopic) {
+      const oldTopic = state.topics[newTopic._id];
+      if (newTopic.name !== undefined) {
+        oldTopic.name = newTopic.name;
       }
-      if (topic.query !== undefined) {
-        oldTopic.query = topic.query;
+      
+      if (newTopic.query !== undefined) {
+        oldTopic.query = newTopic.query;
       }
     },
     deleteTopic(state,uid){
       Vue.delete(state.topics,uid);
     }
   },
+
   actions: {
     init(ctx) {
       rester.on('mutation-topics', msg => {
@@ -52,11 +54,11 @@ export default {
         'addTopic', null, ONLY_RESPONSE)
     },
     editTopic(ctx, topic) {
-      rester.apiPatch(ctx, '/topic', topic,
-        'editTopic', null, ONLY_RESPONSE)
+      rester.apiPatch(ctx, '/topic/'+topic._id,topic,
+        'editTopic',topic,ONLY_RESPONSE)
     },
     deleteTopic(ctx, uid) {
-      rester.apiDelete(ctx, '/topic',
+      rester.apiDelete(ctx, '/topic/'+uid,
         'deleteTopic', uid)
 }
   }
