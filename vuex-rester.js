@@ -59,7 +59,7 @@ function parseDummyResponses(dr) {
   return result;
 }
 
-function routeRequest(verb, dummies, ctx, apiPath, mutParam, apiParam, socketServer) {
+function routeRequest(verb, dummies, ctx, apiPath, apiParam, socketServer) {
   const routes = dummies[verb];
   for (const dummyResponse of routes) {
     const urlParams = dummyResponse.route.match(apiPath);
@@ -67,9 +67,9 @@ function routeRequest(verb, dummies, ctx, apiPath, mutParam, apiParam, socketSer
       let result = dummyResponse.response;
       if (typeof result === "function") {
         if (verb === "SOCKET") {
-          return result(ctx, urlParams, mutParam, apiParam, socketServer);
+          return result(ctx, urlParams, apiParam, socketServer);
         } else {
-          return result(ctx, urlParams, mutParam, apiParam, socketServer ? socketServer.broadcast : null);
+          return result(ctx, urlParams, apiParam, socketServer ? socketServer.broadcast : null);
         }
       } else {
         return result;
@@ -118,7 +118,7 @@ export default class VuexRester {
 
   apiGet(ctx, apiPath, mutation, respMap=IDENTITY) {
     if (this.dummy) {
-      const resp = routeRequest('GET', this.dummyResponses, ctx, apiPath, this._dummySocketServer);
+      const resp = routeRequest('GET', this.dummyResponses, ctx, apiPath, null, this._dummySocketServer);
       if (mutation) ctx.commit(mutation, respMap(resp));
       return Promise.resolve(resp);
     }
@@ -135,7 +135,7 @@ export default class VuexRester {
   apiPost(ctx, apiPath, apiParam, mutation, mutParam, respCombine=ONLY_MUT_PARAM) {
     if (this.dummy) {
       const resp = routeRequest('POST', this.dummyResponses, ctx, apiPath,
-        mutParam, apiParam, this._dummySocketServer);
+        apiParam, this._dummySocketServer);
       if (mutation) ctx.commit(mutation, respCombine(mutParam, resp));
       return Promise.resolve(resp);
     }
@@ -152,7 +152,7 @@ export default class VuexRester {
   apiPatch(ctx, apiPath, apiParam, mutation, mutParam, respCombine=ONLY_MUT_PARAM) {
     if (this.dummy) {
       const resp = routeRequest('PATCH', this.dummyResponses, ctx, apiPath,
-        mutParam, apiParam, this._dummySocketServer);
+        apiParam, this._dummySocketServer);
       if (mutation) ctx.commit(mutation, respCombine(mutParam, resp));
       return Promise.resolve(resp);
     }
@@ -169,7 +169,7 @@ export default class VuexRester {
   apiPut(ctx, apiPath, apiParam, mutation, mutParam, respCombine=ONLY_MUT_PARAM) {
     if (this.dummy) {
       const resp = routeRequest('PUT', this.dummyResponses, ctx, apiPath,
-        mutParam, apiParam, this._dummySocketServer);
+        apiParam, this._dummySocketServer);
       if (mutation) ctx.commit(mutation, respCombine(mutParam, resp));
       return Promise.resolve(resp);
     }
@@ -185,8 +185,8 @@ export default class VuexRester {
 
   apiDelete(ctx, apiPath, mutation, mutParam) {
     if (this.dummy) {
-      const resp = routeRequest('PUT', this.dummyResponses, ctx, apiPath,
-        mutParam, this._dummySocketServer);
+      const resp = routeRequest('DELETE', this.dummyResponses, ctx, apiPath,
+        null, this._dummySocketServer);
       if (mutation) ctx.commit(mutation, mutParam);
       return Promise.resolve(resp);
     }
@@ -229,7 +229,7 @@ export default class VuexRester {
     }
     if (this.dummy) {
       let resp = routeRequest("SOCKET", this.dummyResponses, ctx, messageType,
-         mutParam, apiParam, this._dummySocketServer);
+         apiParam, this._dummySocketServer);
 
       if (mutation) ctx.commit(mutation, respCombine(mutParam, resp));
       return Promise.resolve(resp);
