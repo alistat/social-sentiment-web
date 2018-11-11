@@ -47,18 +47,18 @@ export default {
       rester.emit(ctx, 'watch-topics-list', null, 'setTopics', null, ONLY_RESPONSE);
     },
     loadTopics(ctx) {
-      rester.apiGet(ctx, "/topics", "setTopics");
+      rester.apiGet(ctx, "/", "setTopics");
     },
     addTopic(ctx, topic) {
-      rester.apiPost(ctx, '/topic', topic,
+      rester.apiPost(ctx, '/', topic,
         'addTopic', null, ONLY_RESPONSE)
     },
     editTopic(ctx, topic) {
-      rester.apiPatch(ctx, '/topic/'+topic._id,topic,
+      rester.apiPatch(ctx, '/'+topic._id,topic,
         'editTopic',topic,ONLY_RESPONSE)
     },
     deleteTopic(ctx, uid) {
-      rester.apiDelete(ctx, '/topic/'+uid,
+      rester.apiDelete(ctx, '/'+uid,
         'deleteTopic', uid)
 }
   }

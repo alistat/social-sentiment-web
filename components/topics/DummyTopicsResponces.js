@@ -7,21 +7,21 @@ const initial = [
 
 export default {
   'GET /topics': initial,
-  'GET /topic/0': initial[0],
-  'GET /topic/1': initial[1],
+  'GET /topics/0': initial[0],
+  'GET /topics/1': initial[1],
 
-  'POST /topic': function ({state}, urlParams, apiParam, broadcast) {
+  'POST /topics': function ({state}, urlParams, apiParam, broadcast) {
     let resp = {  _id: newDummyId(initial.length),
       name: apiParam.name, query:  apiParam.query};
     broadcast('topics-list', 'mutation-topics', {mut: 'addTopic', data: resp});
     return resp;
   },
-  'PATCH /topic/:tid': function ({state}, urlParams, apiParam, broadcast) {
+  'PATCH /topics/:tid': function ({state}, urlParams, apiParam, broadcast) {
     let resp = Object.assign({}, state.topics[+urlParams.tid], apiParam);
     broadcast('topics-list', 'mutation-topics', {mut: 'editTopic', data: resp});
     return resp;
   },
-  'DELETE /topic/:tid': function ({state}, urlParams, apiParam, broadcast) {
+  'DELETE /topics/:tid': function ({state}, urlParams, apiParam, broadcast) {
     broadcast('topics-list', 'mutation-topics', {mut: 'deleteTopic', data: +urlParams.tid});
     return {};
   },
