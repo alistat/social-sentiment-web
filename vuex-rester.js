@@ -84,6 +84,7 @@ export default class VuexRester {
 
   constructor({dummy=false, baseUrl='', dummyResponses={}, axiosDefaults={}, configExtractor=null,
                 socketUrl = null, socketMessagePreprocessor = null}) {
+    console.log('edoooo????');
     this.baseUrl = baseUrl;
     this.socketUrl = socketUrl;
     this.socketMessagePreprocessor = socketMessagePreprocessor;
@@ -108,7 +109,7 @@ export default class VuexRester {
           leaveRoom: this._leaveDummySocketRoom.bind(this),
           broadcast: this._dummySocketBroadcast.bind(this)
         };
-      } else if (typeof window.io !== "undefined") {
+      } else if (typeof io !== "undefined") {
         this.socket = io(socketUrl);
       } else {
         console.error("Socket IO not found");
@@ -117,6 +118,7 @@ export default class VuexRester {
   }
 
   apiGet(ctx, apiPath, mutation, respMap=IDENTITY) {
+    console.log('edoooo');
     if (this.dummy) {
       const resp = routeRequest('GET', this.dummyResponses, ctx, apiPath, null, this._dummySocketServer);
       if (mutation) ctx.commit(mutation, respMap(resp));
