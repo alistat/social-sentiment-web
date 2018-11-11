@@ -238,7 +238,7 @@ export default class VuexRester {
     } else if (this.socket) {
       return new Promise((resolve, reject) => {
         try {
-          this.socket.emit(messageType, data, resp => {
+          this.socket.emit(messageType, apiParam, resp => {
             if (mutation) ctx.commit(mutation, respCombine(mutParam, resp));
             return resolve(resp);
           });
