@@ -44,7 +44,7 @@ export default {
       rester.on('mutation-topics', msg => {
         ctx.commit(msg.mut, msg.data);
       });
-      rester.emit(ctx, 'watch-topics-list', null, 'setTopics', null, ONLY_RESPONSE);
+      rester.emit(ctx, 'watch-topics-list', null, 'setTopics', null, (_, r) => r.rows);
     },
     loadTopics(ctx) {
       rester.apiGet(ctx, "/", "setTopics");

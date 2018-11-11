@@ -6,7 +6,7 @@ const initial = [
   {_id: 1, name: 'Νέα Δημοκρατία', query: "#ND OR #ΝewDemocracy OR #ΝΔ -#syriza -#Syrizanel -#ΣΥΡΙΖΑ"}];
 
 export default {
-  'GET /topics': initial,
+  'GET /topics': {rows: initial, tolal: initial.length, page: 1, pageSize: 1000, totalPages: 1},
   'GET /topics/0': initial[0],
   'GET /topics/1': initial[1],
 
@@ -28,6 +28,6 @@ export default {
   'SOCKET watch-topics-list': function ({state}, urlParams, apiParam, socketServer) {
     console.log(socketServer);
     socketServer.joinRoom('topics-list');
-    return initial;
+    return {rows: initial, tolal: initial.length, page: 1, pageSize: 1000, totalPages: 1};
   },
 }
